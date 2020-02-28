@@ -52,11 +52,11 @@ var runCommand = function (command) {
 }
 
 
-var runShell = function (args) {
+var runShell = autostart =>  function (args) {
   console.log('compiling...')
   util.compile(args, function (err, system) {
     if (err) { return console.error(err) }
-    shell.run(system)
+    shell.run(autostart,system)
   })
 }
 
@@ -68,7 +68,8 @@ program.register('--help', showHelp)
 program.register('pull', runCommand('pull'))
 program.register('status', runCommand('status'))
 program.register('test', runCommand('test'))
-program.register('shell', runShell)
+program.register('shell', runShell(false))
+program.register('shell_auto_start', runShell(true))
 
 
 function start (argv) {

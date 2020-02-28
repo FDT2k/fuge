@@ -93,12 +93,11 @@ module.exports = function (hardExit) {
   }
 
 
-  function run (sys, cb) {
+  function run (autostart,sys, cb) {
     var rl
 
     system = sys
     runner = FugeRunner()
-
     if (system.global.dns_enabled) {
       console.log('starting fuge dns [' + system.global.dns_host + ':' + system.global.dns_port + ']..')
       dns = FugeDns({host: system.global.dns_host, port: system.global.dns_port})
@@ -112,6 +111,9 @@ module.exports = function (hardExit) {
     } else {
       initCommands(system, runner, dns)
       console.log('starting shell..')
+      if(autostart)
+          commands['start'].action(['all'],system,x=>x)
+     // console.log(system)
       rl = repl()
       cb && cb(rl)
     }
@@ -139,4 +141,3 @@ module.exports = function (hardExit) {
     runSingleCommand: runSingleCommand
   }
 }
-
