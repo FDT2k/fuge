@@ -29,7 +29,7 @@ module.exports = function () {
     util.compile(args, function (err, system) {
       sys = system
       if (err) { console.error(err); return cb(err) }
-      shell.run(system, function (readl) {
+      shell.run(false,system, function (readl) {
         rl = readl
         setTimeout(cb, 500)
       })
